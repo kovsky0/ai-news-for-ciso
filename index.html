@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI News for CISO — The weekly AI briefing for security leaders</title>
+<meta name="description" content="The weekly AI briefing for security leaders. Weekly, free, five-minute read on AI security for CISOs.">
+<link rel="alternate" type="application/rss+xml" title="AI News for CISO" href="./rss.xml">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<style>
+:root {
+  --text: #121212; --muted: #6b6b6b; --rule: #e0e0e0; --red: #e3120b;
+  --serif: Georgia, 'Times New Roman', serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #fff; color: var(--text); font-family: var(--sans); line-height: 1.6; border-top: 4px solid var(--red); }
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 22px; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+a:hover { color: var(--red); }
+header.site { padding: 20px 0 16px; border-bottom: 1px solid var(--text); }
+header.site .wrap { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.brand { font-family: var(--serif); font-weight: 700; font-size: 19px; text-decoration: none; letter-spacing: -0.01em; }
+.brand:hover { color: inherit; }
+.brand b { color: var(--red); font-weight: 700; }
+nav a { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; margin-left: 20px; }
+nav a:hover { color: var(--red); }
+.hero { padding: 64px 0 44px; }
+.kicker { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--red); margin-bottom: 16px; }
+h1.hero-title { font-family: var(--serif); font-size: clamp(32px, 5.5vw, 48px); line-height: 1.12; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 18px; }
+.hero p.lede { font-size: 17px; color: var(--muted); max-width: 58ch; margin-bottom: 32px; }
+.signup { display: flex; gap: 0; flex-wrap: wrap; max-width: 460px; }
+.signup input[type=email] {
+  flex: 1 1 240px; padding: 12px 14px; font-size: 15px; border-radius: 0;
+  border: 1px solid var(--text); border-right: none; background: #fff; color: var(--text); outline: none;
+}
+.signup input[type=email]:focus { border-color: var(--red); }
+.signup button {
+  padding: 12px 24px; font-size: 14px; font-weight: 700; border: 1px solid var(--red); border-radius: 0;
+  background: var(--red); color: #fff; cursor: pointer; font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.06em;
+}
+.signup button:hover { background: #c00f09; }
+.fine { font-size: 13px; color: var(--muted); margin-top: 12px; }
+.points { padding: 8px 0 16px; }
+.point { border-top: 1px solid var(--rule); padding: 16px 0; display: flex; gap: 24px; align-items: baseline; }
+.point h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text); flex: 0 0 150px; }
+.point p { font-size: 14px; color: var(--muted); margin: 0; }
+section.archive { padding: 40px 0 64px; }
+h2.section { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--red); border-top: 1px solid var(--text); padding-top: 10px; margin-bottom: 8px; }
+.issue-row { display: block; padding: 18px 0; border-bottom: 1px solid var(--rule); color: var(--text); text-decoration: none; }
+.issue-row .meta { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+.issue-row .t { font-family: var(--serif); font-size: 21px; font-weight: 700; line-height: 1.25; }
+.issue-row:hover .t { color: var(--red); }
+.issue-row .d { font-size: 14px; color: var(--muted); margin-top: 5px; }
+.empty { color: var(--muted); font-size: 15px; font-style: italic; padding-top: 10px; }
+.draft-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #fff; background: var(--muted); padding: 2px 6px; margin-left: 8px; vertical-align: middle; }
+footer.site { border-top: 1px solid var(--text); padding: 20px 0 48px; font-size: 13px; color: var(--muted); }
+footer.site .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+article.issue { padding: 48px 0 24px; }
+article.issue .meta { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); font-weight: 700; margin-bottom: 14px; }
+article.issue h1 { font-family: var(--serif); font-size: clamp(28px, 5vw, 40px); line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 28px; }
+.prose { font-size: 16.5px; }
+.prose h2 { font-family: var(--serif); font-size: 25px; font-weight: 700; margin: 40px 0 14px; border-top: 1px solid var(--text); padding-top: 14px; }
+.prose h3 { font-size: 17px; margin: 26px 0 10px; }
+.prose p, .prose ul, .prose ol { margin-bottom: 16px; }
+.prose ul, .prose ol { padding-left: 22px; }
+.prose li { margin-bottom: 8px; }
+.prose strong { font-weight: 700; }
+.prose blockquote { border-left: 2px solid var(--red); padding-left: 16px; color: var(--muted); margin-bottom: 16px; }
+.prose hr { border: none; border-top: 1px solid var(--rule); margin: 32px 0; }
+.prose code { font-size: 0.9em; background: #f4f4f4; padding: 1px 5px; }
+.cta-box { border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: 24px 0; margin: 44px 0; }
+.cta-box h3 { font-family: var(--serif); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.cta-box p { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="./index.html">AI News <b>for CISO</b></a>
+  <nav>
+    <a href="./index.html#archive">Archive</a>
+    <a href="./rss.xml">RSS</a>
+    <a href="./index.html#subscribe">Subscribe</a>
+  </nav>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div class="kicker">Weekly · Free · For security leaders</div>
+  <h1 class="hero-title">AI is moving faster than your security program. Keep up in one email.</h1>
+  <p class="lede">AI News for CISO is a weekly briefing that cuts through AI hype for CISOs and security leaders: real incidents, emerging threats, governance moves, and the tools that matter — each with a "so what" for your program.</p>
+  <div id="subscribe"></div>
+  
+<form class="signup" id="subscribe-hero" action="https://buttondown.com/api/emails/embed-subscribe/ainewsforciso" method="post" target="_blank">
+  <input type="email" name="email" placeholder="you@company.com" required autocomplete="email">
+  <button type="submit">Subscribe free</button>
+</form>
+<p class="fine">One email a week. No vendor pitches. Unsubscribe anytime.</p>
+</div></div>
+<div class="wrap"><div class="points">
+  <div class="point"><h3>Signal, not noise</h3><p>5–8 stories a week, hand-picked and summarized for a security leadership audience. Skimmable in five minutes.</p></div>
+  <div class="point"><h3>The “so what”</h3><p>Every story comes with what it means for your risk posture, your board conversation, or your roadmap.</p></div>
+  <div class="point"><h3>Practitioner-run</h3><p>Curated by a security practitioner, not a content farm. No sponsors deciding what you read.</p></div>
+</div></div>
+<section class="archive"><div class="wrap">
+  <h2 class="section" id="archive">Past issues</h2>
+  <p class="empty">Issue #1 is in the works — subscribe above to get it first.</p>
+</div></section>
+<footer class="site"><div class="wrap">
+  <span>© 2026 AI News for CISO</span>
+  <span>Curated by Daniel Wyrzykowski · Published weekly</span>
+</div></footer>
+</body>
+</html>

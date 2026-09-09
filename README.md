@@ -15,7 +15,7 @@ That's it — `/send-issue` deploys the site and emails subscribers via Buttondo
 
 ## Manual commands
 
-- `npm run build` — build the public site into `dist/` (`-- --drafts` to preview drafts)
+- `npm run build` — build the public site into `dist/` (`-- --drafts` to preview drafts inline; drafts are also always published encrypted at `/preview/`, unlocked with `PREVIEW_PASSWORD` from `.env`)
 - `npm run serve` — build and preview locally
 - `node src/send.js issues/<file>.md` — create a Buttondown draft (`--send` to deliver)
 

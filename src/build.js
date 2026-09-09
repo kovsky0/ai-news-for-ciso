@@ -3,10 +3,20 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { randomBytes, pbkdf2Sync, createCipheriv } from "node:crypto";
 import { marked } from "marked";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const config = JSON.parse(readFileSync(join(root, "config.json"), "utf8"));
+
+// load .env (PREVIEW_PASSWORD is used to encrypt the draft-preview page)
+const envFile = join(root, ".env");
+if (existsSync(envFile)) {
+  for (const line of readFileSync(envFile, "utf8").split("\n")) {
+    const m = line.match(/^(\w+)=(.*)$/);
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
+  }
+}
 const includeDrafts = process.argv.includes("--drafts");
 const dist = join(root, "dist");
 
@@ -27,7 +37,7 @@ function parseFrontmatter(raw, file) {
 }
 
 const issuesDir = join(root, "issues");
-const issues = (existsSync(issuesDir) ? readdirSync(issuesDir) : [])
+const allIssues = (existsSync(issuesDir) ? readdirSync(issuesDir) : [])
   .filter((f) => f.endsWith(".md"))
   .map((f) => {
     const { meta, body } = parseFrontmatter(readFileSync(join(issuesDir, f), "utf8"), f);
@@ -41,8 +51,10 @@ const issues = (existsSync(issuesDir) ? readdirSync(issuesDir) : [])
       html: marked.parse(body),
     };
   })
-  .filter((i) => includeDrafts || !i.draft)
   .sort((a, b) => b.number - a.number);
+
+const issues = allIssues.filter((i) => includeDrafts || !i.draft);
+const drafts = allIssues.filter((i) => i.draft);
 
 // ---------- shared page shell ----------
 
@@ -243,5 +255,69 @@ writeFileSync(
 ${rssItems}
 </channel></rss>`
 );
+
+// ---------- gated draft preview (/preview/) ----------
+// Drafts are AES-256-GCM-encrypted at build time; the page decrypts in the
+// browser with PREVIEW_PASSWORD (PBKDF2, 310k iters). Unlisted and noindexed.
+
+if (drafts.length && process.env.PREVIEW_PASSWORD) {
+  const previewHtml = drafts
+    .map(
+      (i) => `<article class="issue">
+  <div class="meta">Issue #${i.number} · ${i.date}<span class="draft-badge">DRAFT</span></div>
+  <h1>${i.title}</h1>
+  <div class="prose">${i.html}</div>
+</article>`
+    )
+    .join('<hr style="border:none;border-top:3px double #121212;margin:48px 0">');
+
+  const salt = randomBytes(16);
+  const iv = randomBytes(12);
+  const key = pbkdf2Sync(process.env.PREVIEW_PASSWORD, salt, 310000, 32, "sha256");
+  const cipher = createCipheriv("aes-256-gcm", key, iv);
+  const ct = Buffer.concat([cipher.update(previewHtml, "utf8"), cipher.final(), cipher.getAuthTag()]);
+
+  const gate = `
+<div class="wrap" id="gate" style="padding:64px 0">
+  <div class="kicker">Editors only</div>
+  <h1 class="hero-title" style="font-size:32px">Preview of the upcoming issue</h1>
+  <p class="lede" style="font-size:15px;color:var(--muted);margin-bottom:20px">This page is encrypted. Enter the editor password to read ${drafts.length} draft issue(s).</p>
+  <form class="signup" id="pwform">
+    <input type="password" id="pw" placeholder="Password" autocomplete="current-password" style="flex:1 1 240px;padding:12px 14px;font-size:15px;border:1px solid var(--text);border-right:none;outline:none">
+    <button type="submit">Unlock</button>
+  </form>
+  <p class="fine" id="err" style="color:var(--red);visibility:hidden">Wrong password.</p>
+</div>
+<div class="wrap" id="content"></div>
+<script>
+const B64 = { salt: "${salt.toString("base64")}", iv: "${iv.toString("base64")}", ct: "${ct.toString("base64")}" };
+const un = (s) => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function unlock(pw) {
+  const mat = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt: un(B64.salt), iterations: 310000, hash: "SHA-256" }, mat, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: un(B64.iv) }, key, un(B64.ct));
+  document.getElementById("content").innerHTML = new TextDecoder().decode(pt);
+  document.getElementById("gate").style.display = "none";
+  sessionStorage.setItem("previewPw", pw);
+}
+document.getElementById("pwform").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  try { await unlock(document.getElementById("pw").value); }
+  catch { document.getElementById("err").style.visibility = "visible"; }
+});
+const saved = sessionStorage.getItem("previewPw");
+if (saved) unlock(saved).catch(() => sessionStorage.removeItem("previewPw"));
+</script>`;
+
+  mkdirSync(join(dist, "preview"), { recursive: true });
+  writeFileSync(
+    join(dist, "preview", "index.html"),
+    page({ title: `Draft preview — ${config.siteName}`, description: "Editors only.", body: gate, relRoot: "../" })
+      .replace("<meta name=\"description\"", "<meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"description\"")
+  );
+  console.log(`Built encrypted preview of ${drafts.length} draft(s) at /preview/`);
+} else if (drafts.length) {
+  console.log("Skipping /preview/ (PREVIEW_PASSWORD not set)");
+}
 
 console.log(`Built ${issues.length} issue(s) into dist/ (${includeDrafts ? "including" : "excluding"} drafts)`);

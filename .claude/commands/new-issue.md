@@ -9,6 +9,6 @@ Steps:
 2. Fetch EVERY link with WebFetch (spawn parallel subagents if there are many). For each: extract what actually happened, who it affects, and primary sources. If a link is thin or duplicative, say so and fold it into another item or drop it — tell the editor which links you dropped and why.
 3. Rank stories by relevance to security leaders. Pick "The big one" deliberately — the story a CISO is most likely to be asked about this week.
 4. Write the issue following the editorial voice in CLAUDE.md (structure, "So what:" lines, length limits). Save as `issues/NNN-slug.md` with `status: draft`.
-5. Run `npm run build -- --drafts` to verify it builds, then show the editor: the dropped links, the story ranking, and the full draft for review.
+5. Run `npm run build -- --drafts` to verify it builds, then show the editor: the dropped links, the story ranking, and the full draft for review. If the editor wants a shareable preview, run `npm run deploy` and point them to https://ainewsforciso.com/preview/ (password = `PREVIEW_PASSWORD` in `.env`).
 
 Do NOT send anything — `/send-issue` handles publishing after the editor approves.

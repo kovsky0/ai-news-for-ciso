@@ -7,7 +7,8 @@ Weekly newsletter for CISOs and security leaders about AI: incidents, threats, g
 - `issues/*.md` — one file per issue, markdown with frontmatter. This is the source of truth.
 - `src/build.js` — renders `dist/` (landing page, issue pages, RSS) from the issues. `npm run build` (add `-- --drafts` to include drafts for preview).
 - `src/send.js` — pushes an issue to Buttondown (subscriber list + email delivery). Draft by default, `--send` to deliver. Needs `BUTTONDOWN_API_KEY` in `.env`.
-- `.github/workflows/deploy.yml` — builds and deploys the site to GitHub Pages on every push to `main`. Drafts are never published to the live site.
+- `.github/workflows/deploy.yml` — builds and deploys the site to GitHub Pages on every push to `main`. Drafts are never published to the live archive.
+- **Gated draft preview**: the build emits `/preview/` — an unlisted, noindexed page where all draft issues are AES-256-GCM-encrypted with `PREVIEW_PASSWORD` from `.env` and decrypted in the browser. Share https://ainewsforciso.com/preview/ + the password to let someone read the upcoming issue. Note: draft markdown is still visible in the public GitHub repo; the gate protects the rendered page, not the git source.
 - `config.json` — site name, URL, Buttondown username.
 
 ## Weekly workflow (the whole point of this repo)

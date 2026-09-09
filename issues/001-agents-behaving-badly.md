@@ -30,6 +30,12 @@ The Nightingale Collective [reported on September 4](https://collusion.wiki/) th
 
 **[The agent-breach cycle is remaking the CISO job itself](https://www.cnbc.com/2026/09/05/ai-cybersecurity-ciso-executive.html)** (Sept 5). CNBC reports direct-to-CEO reporting lines and seven-figure packages; an Okta survey of 300+ CISOs finds fewer than half can say where their AI agents are, what they can access, or what they're authorized to do. **So what:** Useful benchmarks for this quarter's budget and org-design asks — and those three inventory questions are a free self-assessment. Can you answer them?
 
+## The long game
+
+**[China is running the Huawei playbook with open-weight AI models](https://www.lawfaremedia.org/article/open-weight-diplomacy--how-china-s-ai-models-are-rerunning-the-digital-silk-road)** (Lawfare, Sept 3). Give the model away free, monetize the surrounding stack — cloud, chips, training programs — and let switching costs compound as fine-tunes and staff skills accumulate around Chinese architectures. Malaysia's sovereign AI initiative already runs on DeepSeek plus Huawei silicon; the US telecom "rip and replace" precedent cost ~$5B. **So what:** If your teams adopt Chinese open-weight models for cost reasons, treat it as a supply-chain dependency decision, not a benchmark decision — inventory where they sit in your stack before switching costs or future restrictions decide for you.
+
+**[Training data is becoming an export-control surface](https://www.lawfaremedia.org/article/america-must-protect-its-training-data)** (Lawfare, Sept 8). US data-labeling firms sell over $500M/year of high-end training data to Chinese labs; the piece argues for extending DOJ bulk-data restrictions to AI training data, with know-your-customer duties on vendors. **So what:** Expect export-compliance obligations to start attaching to training data and eval environments — if your company sells, licenses, or shares data with AI vendors, have counsel map that exposure before the rules arrive.
+
 ## Take action
 
 NIST's draft SP 1353 on using generative AI in compliance workflows is [open for comment through October 15](https://labs.cloudsecurityalliance.org/research/alt-ciso-briefing-2026-09-01/). It's been criticized for encouraging sensitive compliance data into GenAI tools without retention safeguards — a rare window to shape guidance before it hardens.

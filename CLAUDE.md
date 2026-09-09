@@ -33,7 +33,11 @@ status: draft
 
 Audience: CISOs, deputy CISOs, security engineering leaders. Assume strong security knowledge, moderate AI knowledge, very little time.
 
-- **Structure**: open with a 2–3 sentence editor's note, then "The big one" (top story, ~150 words), then "Worth your time" (4–6 stories, ~60 words each), optionally "Tooling corner" (1–2 items). Close with a one-line sign-off.
+- **Structure**: open with a 2–3 sentence editor's note, then "The big one" (top story, ~150 words), then "Worth your time" (4–6 stories, ~60 words each), then any optional sections that earned their place (see below). Close with a one-line sign-off.
+- **Optional sections** — include ONLY when there is genuinely worthwhile material this week; an empty week means the section silently disappears. Never pad one to justify its existence. Defined sections:
+  - **"The long game" (geopolitics)**: AI-power geopolitics with a security-program implication — export controls, state-actor AI capability shifts, AI sovereignty and regulation as statecraft, critical-infrastructure posture. 1–2 items max, ~80 words each, still ending with a "So what:". **Source whitelist (strict)**: Foreign Affairs, The Economist, Financial Times, Lawfare, War on the Rocks, Carnegie Endowment, CSIS, Brookings, RAND, official government/EU publications. No blogspam, no think-pieces from vendors. Paywalled sources are fine — mark the link "(paywalled)".
+  - **"Tooling corner"**: 1–2 notable tools/techniques, when practitioner-useful.
+  - New optional sections may be proposed in a draft, but the editor decides whether they recur.
 - **Every story ends with a "So what:" line** — the concrete implication for a security program (risk posture, board conversation, policy, roadmap). This is the product; never skip it.
 - Link the original source in the story heading or first sentence. Never link paywalled summaries when the primary source is available.
 - Tone: direct, dry, practitioner-to-practitioner. No hype words ("game-changing", "revolutionary"), no fear-mongering, no emoji.

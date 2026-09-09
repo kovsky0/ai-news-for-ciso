@@ -7,7 +7,8 @@
   "scripts": {
     "build": "node src/build.js",
     "serve": "node src/build.js && npx serve dist",
-    "send": "node src/send.js"
+    "send": "node src/send.js",
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "marked": "^15.0.0"

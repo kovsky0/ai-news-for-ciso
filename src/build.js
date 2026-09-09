@@ -287,6 +287,7 @@ if (drafts.length && process.env.PREVIEW_PASSWORD) {
     <button type="submit">Unlock</button>
   </form>
   <p class="fine" id="err" style="color:var(--red);visibility:hidden">Wrong password.</p>
+  <p class="fine" id="nocrypto" style="color:var(--red);display:none">This page can only decrypt over HTTPS. <a href="#" id="tryhttps">Try the HTTPS version</a> — if that fails, the site's TLS certificate is still being provisioned; check back shortly.</p>
 </div>
 <div class="wrap" id="content"></div>
 <script>
@@ -300,13 +301,22 @@ async function unlock(pw) {
   document.getElementById("gate").style.display = "none";
   sessionStorage.setItem("previewPw", pw);
 }
-document.getElementById("pwform").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  try { await unlock(document.getElementById("pw").value); }
-  catch { document.getElementById("err").style.visibility = "visible"; }
-});
-const saved = sessionStorage.getItem("previewPw");
-if (saved) unlock(saved).catch(() => sessionStorage.removeItem("previewPw"));
+if (!(window.crypto && window.crypto.subtle)) {
+  document.getElementById("pwform").style.display = "none";
+  document.getElementById("nocrypto").style.display = "block";
+  document.getElementById("tryhttps").addEventListener("click", (e) => {
+    e.preventDefault();
+    location.href = location.href.replace(/^http:/, "https:");
+  });
+} else {
+  document.getElementById("pwform").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try { await unlock(document.getElementById("pw").value); }
+    catch { document.getElementById("err").style.visibility = "visible"; }
+  });
+  const saved = sessionStorage.getItem("previewPw");
+  if (saved) unlock(saved).catch(() => sessionStorage.removeItem("previewPw"));
+}
 </script>`;
 
   mkdirSync(join(dist, "preview"), { recursive: true });

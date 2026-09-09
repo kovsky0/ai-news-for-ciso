@@ -187,6 +187,9 @@ const landingBody = `
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 
+// custom-domain marker for GitHub Pages; the deploy script force-pushes dist as-is
+writeFileSync(join(dist, "CNAME"), new URL(config.siteUrl).hostname + "\n");
+
 writeFileSync(
   join(dist, "index.html"),
   page({

@@ -48,67 +48,68 @@ const issues = (existsSync(issuesDir) ? readdirSync(issuesDir) : [])
 
 const css = `
 :root {
-  --bg: #0b0e14; --panel: #11151f; --border: #1e2534;
-  --text: #d7dce6; --muted: #8b94a7; --accent: #4ade80; --accent-dim: #14532d;
+  --text: #121212; --muted: #6b6b6b; --rule: #e0e0e0; --red: #e3120b;
   --serif: Georgia, 'Times New Roman', serif;
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.65; }
-.wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-header.site { padding: 28px 0; border-bottom: 1px solid var(--border); }
+body { background: #fff; color: var(--text); font-family: var(--sans); line-height: 1.6; border-top: 4px solid var(--red); }
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 22px; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+a:hover { color: var(--red); }
+header.site { padding: 20px 0 16px; border-bottom: 1px solid var(--text); }
 header.site .wrap { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-.brand { font-family: var(--mono); font-size: 15px; color: var(--text); letter-spacing: 0.02em; }
-.brand b { color: var(--accent); }
-nav a { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-left: 18px; }
-.hero { padding: 72px 0 40px; }
-.kicker { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 18px; }
-h1.hero-title { font-family: var(--serif); font-size: clamp(34px, 6vw, 52px); line-height: 1.12; font-weight: 500; margin-bottom: 20px; }
-.hero p.lede { font-size: 18px; color: var(--muted); max-width: 56ch; margin-bottom: 34px; }
-.signup { display: flex; gap: 10px; flex-wrap: wrap; max-width: 480px; }
+.brand { font-family: var(--serif); font-weight: 700; font-size: 19px; text-decoration: none; letter-spacing: -0.01em; }
+.brand:hover { color: inherit; }
+.brand b { color: var(--red); font-weight: 700; }
+nav a { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; margin-left: 20px; }
+nav a:hover { color: var(--red); }
+.hero { padding: 64px 0 44px; }
+.kicker { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--red); margin-bottom: 16px; }
+h1.hero-title { font-family: var(--serif); font-size: clamp(32px, 5.5vw, 48px); line-height: 1.12; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 18px; }
+.hero p.lede { font-size: 17px; color: var(--muted); max-width: 58ch; margin-bottom: 32px; }
+.signup { display: flex; gap: 0; flex-wrap: wrap; max-width: 460px; }
 .signup input[type=email] {
-  flex: 1 1 240px; padding: 13px 16px; font-size: 15px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--panel); color: var(--text); outline: none;
+  flex: 1 1 240px; padding: 12px 14px; font-size: 15px; border-radius: 0;
+  border: 1px solid var(--text); border-right: none; background: #fff; color: var(--text); outline: none;
 }
-.signup input[type=email]:focus { border-color: var(--accent); }
+.signup input[type=email]:focus { border-color: var(--red); }
 .signup button {
-  padding: 13px 22px; font-size: 15px; font-weight: 600; border-radius: 8px; border: none;
-  background: var(--accent); color: #06220f; cursor: pointer; font-family: var(--sans);
+  padding: 12px 24px; font-size: 14px; font-weight: 700; border: 1px solid var(--red); border-radius: 0;
+  background: var(--red); color: #fff; cursor: pointer; font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.06em;
 }
-.signup button:hover { filter: brightness(1.1); }
+.signup button:hover { background: #c00f09; }
 .fine { font-size: 13px; color: var(--muted); margin-top: 12px; }
-.points { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; padding: 34px 0 10px; }
-.point { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
-.point h3 { font-size: 14px; font-family: var(--mono); color: var(--accent); margin-bottom: 8px; font-weight: 500; }
-.point p { font-size: 14px; color: var(--muted); }
-section.archive { padding: 44px 0 60px; }
-h2.section { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); margin-bottom: 20px; }
-.issue-row { display: block; padding: 18px 0; border-bottom: 1px solid var(--border); color: var(--text); }
-.issue-row:hover { text-decoration: none; background: var(--panel); margin: 0 -16px; padding: 18px 16px; border-radius: 8px; }
-.issue-row .meta { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 4px; }
-.issue-row .t { font-family: var(--serif); font-size: 20px; }
-.issue-row .d { font-size: 14px; color: var(--muted); margin-top: 4px; }
-.empty { color: var(--muted); font-size: 15px; font-style: italic; }
-.draft-badge { font-family: var(--mono); font-size: 11px; color: #fbbf24; border: 1px solid #fbbf2455; border-radius: 4px; padding: 1px 7px; margin-left: 8px; vertical-align: middle; }
-footer.site { border-top: 1px solid var(--border); padding: 26px 0 44px; font-size: 13px; color: var(--muted); }
+.points { padding: 8px 0 16px; }
+.point { border-top: 1px solid var(--rule); padding: 16px 0; display: flex; gap: 24px; align-items: baseline; }
+.point h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text); flex: 0 0 150px; }
+.point p { font-size: 14px; color: var(--muted); margin: 0; }
+section.archive { padding: 40px 0 64px; }
+h2.section { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--red); border-top: 1px solid var(--text); padding-top: 10px; margin-bottom: 8px; }
+.issue-row { display: block; padding: 18px 0; border-bottom: 1px solid var(--rule); color: var(--text); text-decoration: none; }
+.issue-row .meta { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+.issue-row .t { font-family: var(--serif); font-size: 21px; font-weight: 700; line-height: 1.25; }
+.issue-row:hover .t { color: var(--red); }
+.issue-row .d { font-size: 14px; color: var(--muted); margin-top: 5px; }
+.empty { color: var(--muted); font-size: 15px; font-style: italic; padding-top: 10px; }
+.draft-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #fff; background: var(--muted); padding: 2px 6px; margin-left: 8px; vertical-align: middle; }
+footer.site { border-top: 1px solid var(--text); padding: 20px 0 48px; font-size: 13px; color: var(--muted); }
 footer.site .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-article.issue { padding: 52px 0 30px; }
-article.issue .meta { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-bottom: 12px; }
-article.issue h1 { font-family: var(--serif); font-size: clamp(30px, 5vw, 42px); line-height: 1.15; font-weight: 500; margin-bottom: 30px; }
-.prose h2 { font-family: var(--serif); font-size: 26px; font-weight: 500; margin: 38px 0 14px; }
-.prose h3 { font-size: 18px; margin: 28px 0 10px; }
-.prose p, .prose ul, .prose ol { margin-bottom: 16px; color: var(--text); }
-.prose ul, .prose ol { padding-left: 24px; }
+article.issue { padding: 48px 0 24px; }
+article.issue .meta { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); font-weight: 700; margin-bottom: 14px; }
+article.issue h1 { font-family: var(--serif); font-size: clamp(28px, 5vw, 40px); line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 28px; }
+.prose { font-size: 16.5px; }
+.prose h2 { font-family: var(--serif); font-size: 25px; font-weight: 700; margin: 40px 0 14px; border-top: 1px solid var(--text); padding-top: 14px; }
+.prose h3 { font-size: 17px; margin: 26px 0 10px; }
+.prose p, .prose ul, .prose ol { margin-bottom: 16px; }
+.prose ul, .prose ol { padding-left: 22px; }
 .prose li { margin-bottom: 8px; }
-.prose strong { color: #fff; }
-.prose blockquote { border-left: 3px solid var(--accent); padding-left: 16px; color: var(--muted); margin-bottom: 16px; }
-.prose hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
-.prose code { font-family: var(--mono); font-size: 0.9em; background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; }
-.cta-box { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 26px; margin: 40px 0; }
-.cta-box h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 8px; font-weight: 500; }
+.prose strong { font-weight: 700; }
+.prose blockquote { border-left: 2px solid var(--red); padding-left: 16px; color: var(--muted); margin-bottom: 16px; }
+.prose hr { border: none; border-top: 1px solid var(--rule); margin: 32px 0; }
+.prose code { font-size: 0.9em; background: #f4f4f4; padding: 1px 5px; }
+.cta-box { border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: 24px 0; margin: 44px 0; }
+.cta-box h3 { font-family: var(--serif); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
 .cta-box p { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
 `;
 
@@ -172,9 +173,9 @@ const landingBody = `
   ${signupForm("subscribe-hero")}
 </div></div>
 <div class="wrap"><div class="points">
-  <div class="point"><h3>// signal, not noise</h3><p>5–8 stories a week, hand-picked and summarized for a security leadership audience. Skimmable in five minutes.</p></div>
-  <div class="point"><h3>// the "so what"</h3><p>Every story comes with what it means for your risk posture, your board conversation, or your roadmap.</p></div>
-  <div class="point"><h3>// practitioner-run</h3><p>Curated by a security practitioner, not a content farm. No sponsors deciding what you read.</p></div>
+  <div class="point"><h3>Signal, not noise</h3><p>5–8 stories a week, hand-picked and summarized for a security leadership audience. Skimmable in five minutes.</p></div>
+  <div class="point"><h3>The “so what”</h3><p>Every story comes with what it means for your risk posture, your board conversation, or your roadmap.</p></div>
+  <div class="point"><h3>Practitioner-run</h3><p>Curated by a security practitioner, not a content farm. No sponsors deciding what you read.</p></div>
 </div></div>
 <section class="archive"><div class="wrap">
   <h2 class="section" id="archive">Past issues</h2>

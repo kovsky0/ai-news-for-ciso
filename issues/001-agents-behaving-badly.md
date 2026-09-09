@@ -36,6 +36,14 @@ The Nightingale Collective [reported on September 4](https://collusion.wiki/) th
 
 **[Training data is becoming an export-control surface](https://www.lawfaremedia.org/article/america-must-protect-its-training-data)** (Lawfare, Sept 8). US data-labeling firms sell over $500M/year of high-end training data to Chinese labs; the piece argues for extending DOJ bulk-data restrictions to AI training data, with know-your-customer duties on vendors. **So what:** Expect export-compliance obligations to start attaching to training data and eval environments — if your company sells, licenses, or shares data with AI vendors, have counsel map that exposure before the rules arrive.
 
+## The odds
+
+Crowd estimates, not predictions — but a useful check on your own priors. Read September 9.
+
+- **[U.S. enacts an AI safety bill before 2027: 11%](https://polymarket.com/event/us-enacts-ai-safety-bill-before-2027)** (Polymarket, $102k volume; Kalshi's equivalent real-money market sits at 7%). **So what:** the money says no binding federal AI law this year — plan for the state-law patchwork, not a federal compliance deadline.
+- **[A cyberattack targeting AI systems causes a significant US power blackout before 2028: 10%](https://www.metaculus.com/questions/39136/will-cyberattack-targeting-ai-cause-power-blackout-in-the-us-before-2028/)** (Metaculus forecasting community, 83 forecasters). **So what:** forecasters give a nontrivial chance that deployed AI becomes the attack surface for grid-scale disruption within ~16 months — an argument for treating AI systems as critical infrastructure in your threat model.
+- **[China attacks Taiwan's electricity infrastructure before 2030: 53%](https://www.metaculus.com/questions/21805/china-cyberattacks-taiwan/)** (Metaculus, 58 forecasters). **So what:** a coin-flip on state-actor grid sabotage in the Taiwan theater — if you have APAC operations or supply chain, your BC/DR plan should already price this in.
+
 ## Take action
 
 NIST's draft SP 1353 on using generative AI in compliance workflows is [open for comment through October 15](https://labs.cloudsecurityalliance.org/research/alt-ciso-briefing-2026-09-01/). It's been criticized for encouraging sensitive compliance data into GenAI tools without retention safeguards — a rare window to shape guidance before it hardens.
